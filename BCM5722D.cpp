@@ -309,7 +309,7 @@ IOReturn BCM5722D::enable(IONetworkInterface *iface)
         timerSource->setTimeoutMS(kWatchDogTimeout);
         
         selectMedium(getSelectedMedium());
-        
+		serviceLinkInterrupt();
         setLinkStatus(kIONetworkLinkValid, 0);
         transmitQueue->setCapacity(txQueueLength);
         transmitQueue->start();
