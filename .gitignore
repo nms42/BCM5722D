@@ -9,3 +9,6 @@ build/
 
 *.pbxuser
 *.mode1v3
+BCM5722D.xcodeproj/xcuserdata/nms.xcuserdatad/xcschemes/xcschememanagement.plist
+BCM5722D.xcodeproj/project.xcworkspace/xcshareddata/IDEWorkspaceChecks.plist
+BCM5722D.xcodeproj/project.xcworkspace/xcuserdata/nms.xcuserdatad/UserInterfaceState.xcuserstate
