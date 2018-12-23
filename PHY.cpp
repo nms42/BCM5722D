@@ -408,7 +408,7 @@ IOReturn BCM5722D::setMedium(const IONetworkMedium *medium)
 
 inline UInt16 BCM5722D::resolvePauseAdvertisement(FlowControl flowControl)
 {
-  UInt16 advertise;
+  UInt16 advertise = 0;
 
   switch (flowControl) {
 
@@ -606,7 +606,7 @@ bool BCM5722D::forceLinkSpeedDuplex(LinkSpeed changeSpeed,
   Log("Forcing link speed: %d MBps, %s duplex",
       changeSpeed, (changeDuplex == kLinkDuplexFull ? "full" : "half"));
 
-  UInt16 miiCtl;
+  UInt16 miiCtl = 0;
 
   switch (changeSpeed) {
 
