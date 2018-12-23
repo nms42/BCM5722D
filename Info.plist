@@ -34,23 +34,23 @@
 			<string>my_name_adlan_BCM5722D</string>
 			<key>IONameMatch</key>
 			<array>
+				<string>pci14e4,1600</string>
 				<string>pci14e4,165a</string>
-				<string>pci14e4,167a</string>
 				<string>pci14e4,1672</string>
-				<string>pci14e4,167b</string>
 				<string>pci14e4,1673</string>
-				<string>pci14e4,169b</string>
+				<string>pci14e4,167a</string>
+				<string>pci14e4,167b</string>
+				<string>pci14e4,1680</string>
+				<string>pci14e4,1681</string>
+				<string>pci14e4,1691</string>
+				<string>pci14e4,1692</string>
 				<string>pci14e4,1693</string>
+				<string>pci14e4,1698</string>
+				<string>pci14e4,169b</string>
+				<string>pci14e4,16b1</string>
+				<string>pci14e4,16b5</string>
 				<string>pci14e4,1712</string>
 				<string>pci14e4,1713</string>
-				<string>pci14e4,1691</string>
-				<string>pci14e4,1698</string>
-				<string>pci14e4,16b5</string>
-				<string>pci14e4,16b1</string>
-				<string>pci14e4,1692</string>
-				<string>pci14e4,1600</string>
-				<string>pci14e4,1681</string>
-				<string>pci14e4,1680</string>
 			</array>
 			<key>IOProviderClass</key>
 			<string>IOPCIDevice</string>
