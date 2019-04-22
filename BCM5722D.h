@@ -22,7 +22,7 @@
 #ifdef __cplusplus
 extern "C" {
 #endif // __cplusplus
-    
+	
 #include <libkern/libkern.h>
 #include <libkern/OSAtomic.h>
 #include <machine/limits.h>
@@ -37,7 +37,7 @@ extern "C" {
 #include <sys/appleapiopts.h>
 #include <sys/errno.h>
 #include <sys/kpi_mbuf.h>
-    
+	
 #ifdef __cplusplus
 }
 #endif // __cplusplus
@@ -71,255 +71,255 @@ extern "C" {
 
 enum
 {
-  kMaxPacketSize     = kIOEthernetMaxPacketSize +  4,
-  kTxBDCount         = 512,
-  kRxBDCount         = 512,
-  kTxMaxSegmentCount = 384,  // 0.75 *ring size(512) = 384
-  kRxMaxSegmentCount = 1,
-  kWatchDogTimeout   = 5000  // ms
+	kMaxPacketSize     = kIOEthernetMaxPacketSize +  4,
+	kTxBDCount         = 512,
+	kRxBDCount         = 512,
+	kTxMaxSegmentCount = 384,  // 0.75 *ring size(512) = 384
+	kRxMaxSegmentCount = 1,
+	kWatchDogTimeout   = 5000  // ms
 };
 
 
 enum BOption
 {
-  kOptionDefault = 0,
-  kBDOptionReuse,      // [configureRxDescriptor] Reuse the buffer descriptor
+	kOptionDefault = 0,
+	kBDOptionReuse,      // [configureRxDescriptor] Reuse the buffer descriptor
 };
 
 
 class BCM5722D : public IOEthernetController
 {
-  OSDeclareDefaultStructors(BCM5722D);
-
- private:
-  IOPCIDevice            *pciNub;
-  IOMemoryMap            *csrMap;
-  IOWorkLoop             *workLoop;
-  volatile void          *csrBase;
-  IOInterruptEventSource *interruptSource;
-  IOEthernetInterface    *netIface;
-  IOTimerEventSource     *timerSource;
-  IOEthernetAddress       ethAddress;
-  IOOutputQueue          *transmitQueue;
-  IONetworkStats         *networkStats;
-  IOEthernetStats        *ethernetStats;
-  OSDictionary           *mediumDict;
-
-  IOBufferMemoryDescriptor  *txMD;
-  BTxBufferDescriptor       *txBD;
-  IOPhysicalAddress          txAddress;
-  IOMbufNaturalMemoryCursor *txCursor;
-  mbuf_t                     txPacketArray[kTxBDCount];
-
-  IOBufferMemoryDescriptor  *rxMD;
-  BRxBufferDescriptor       *rxBD;
-  IOPhysicalAddress          rxAddress;
-  IOMbufNaturalMemoryCursor *rxCursor;
-  mbuf_t                     rxPacketArray[kRxBDCount];
-
-  IOBufferMemoryDescriptor *rxReturnMD;
-  BRxBufferDescriptor      *rxReturnBD;
-  IOPhysicalAddress         rxReturnAddress;
-
-  IOBufferMemoryDescriptor *statusBlockMD;
-  BStatusBlock             *statusBlock;
-  IOPhysicalAddress         statusBlockAddress;
-
-  UInt16        asicRevision;
-  UInt16        deviceID;
-  UInt32        txQueueLength;
-    bool          queueStalled;
-  bool          magicPacketSupported;
-  bool          wakeOnLanEnabled;
-  bool          adapterEnabled;
-  bool          interruptEnabled;
-  bool          promiscuousModeEnabled;
-  unsigned long currentPowerState;
-
-  UInt16 txProducerIdx;
-  UInt16 txLocalConsumerIdx;
-    SInt16 txFreeSlot;
-
-  UInt16 rxProducerIdx;
-  UInt16 rxReturnConsumerIdx;
-  UInt16 rxSegmentLength[kRxBDCount];
-
-  UInt32 rxMode;
-  UInt32 txMode;
-  UInt32 macMode;
-  UInt32 pciMiscHostControl;
-
-  bool        autoNegotiate;
-  UInt8       currentMediumIndex;
-  UInt32      phyID;
-  UInt16      phyFlags;
-  MediaStatus media;
-
- public:
-
+	OSDeclareDefaultStructors(BCM5722D);
+	
+private:
+	IOPCIDevice            *pciNub;
+	IOMemoryMap            *csrMap;
+	IOWorkLoop             *workLoop;
+	volatile void          *csrBase;
+	IOInterruptEventSource *interruptSource;
+	IOEthernetInterface    *netIface;
+	IOTimerEventSource     *timerSource;
+	IOEthernetAddress       ethAddress;
+	IOOutputQueue          *transmitQueue;
+	IONetworkStats         *networkStats;
+	IOEthernetStats        *ethernetStats;
+	OSDictionary           *mediumDict;
+	
+	IOBufferMemoryDescriptor  *txMD;
+	BTxBufferDescriptor       *txBD;
+	IOPhysicalAddress          txAddress;
+	IOMbufNaturalMemoryCursor *txCursor;
+	mbuf_t                     txPacketArray[kTxBDCount];
+	
+	IOBufferMemoryDescriptor  *rxMD;
+	BRxBufferDescriptor       *rxBD;
+	IOPhysicalAddress          rxAddress;
+	IOMbufNaturalMemoryCursor *rxCursor;
+	mbuf_t                     rxPacketArray[kRxBDCount];
+	
+	IOBufferMemoryDescriptor *rxReturnMD;
+	BRxBufferDescriptor      *rxReturnBD;
+	IOPhysicalAddress         rxReturnAddress;
+	
+	IOBufferMemoryDescriptor *statusBlockMD;
+	BStatusBlock             *statusBlock;
+	IOPhysicalAddress         statusBlockAddress;
+	
+	UInt16        asicRevision;
+	UInt16        deviceID;
+	UInt32        txQueueLength;
+	bool          queueStalled;
+	bool          magicPacketSupported;
+	bool          wakeOnLanEnabled;
+	bool          adapterEnabled;
+	bool          interruptEnabled;
+	bool          promiscuousModeEnabled;
+	unsigned long currentPowerState;
+	
+	UInt16 txProducerIdx;
+	UInt16 txLocalConsumerIdx;
+	SInt16 txFreeSlot;
+	
+	UInt16 rxProducerIdx;
+	UInt16 rxReturnConsumerIdx;
+	UInt16 rxSegmentLength[kRxBDCount];
+	
+	UInt32 rxMode;
+	UInt32 txMode;
+	UInt32 macMode;
+	UInt32 pciMiscHostControl;
+	
+	bool        autoNegotiate;
+	UInt8       currentMediumIndex;
+	UInt32      phyID;
+	UInt16      phyFlags;
+	MediaStatus media;
+	
+public:
+	
 #pragma mark -
 #pragma mark IOService Methods
-
-  virtual bool start(IOService *provider);
-  virtual void stop(IOService *provider);
-  virtual void free(void);
-
+	
+	virtual bool start(IOService *provider);
+	virtual void stop(IOService *provider);
+	virtual void free(void);
+	
 #pragma mark -
 #pragma mark IONetworkController Methods
-
-  virtual IOReturn        enable(IONetworkInterface *iface);
-  virtual IOReturn        disable(IONetworkInterface *iface);
-    virtual void            systemWillShutdown(IOOptionBits specifier);
-  virtual bool            createWorkLoop();
-  virtual IOWorkLoop     *getWorkLoop(void) const;
-  virtual IOOutputQueue  *createOutputQueue();
-  virtual bool            configureInterface(IONetworkInterface *iface);
-  virtual IOReturn        getChecksumSupport(UInt32 *checksumMask,
-                                             UInt32 checksumFamily,
-                                             bool isOutput);
-  virtual IOReturn        getPacketFilters(const OSSymbol *group,
-                                           UInt32 *filters) const;
-  virtual IOReturn        getMaxPacketSize(UInt32 *maxSize) const;
-  virtual IOReturn        registerWithPolicyMaker(IOService *policyMaker);
-  virtual IOReturn        setPowerState(unsigned long powerStateOrdinal,
-                                        IOService *policyMaker);
-  virtual UInt32          outputPacket(mbuf_t m,
-                                       void *param);
-  virtual IOReturn        selectMedium(const IONetworkMedium *medium);
-  virtual const OSString *newModelString() const;
-  virtual const OSString *newRevisionString() const;
-  virtual const OSString *newVendorString() const;
-
+	
+	virtual IOReturn        enable(IONetworkInterface *iface);
+	virtual IOReturn        disable(IONetworkInterface *iface);
+	virtual void            systemWillShutdown(IOOptionBits specifier);
+	virtual bool            createWorkLoop();
+	virtual IOWorkLoop     *getWorkLoop(void) const;
+	virtual IOOutputQueue  *createOutputQueue();
+	virtual bool            configureInterface(IONetworkInterface *iface);
+	virtual IOReturn        getChecksumSupport(UInt32 *checksumMask,
+						   UInt32 checksumFamily,
+						   bool isOutput);
+	virtual IOReturn        getPacketFilters(const OSSymbol *group,
+						 UInt32 *filters) const;
+	virtual IOReturn        getMaxPacketSize(UInt32 *maxSize) const;
+	virtual IOReturn        registerWithPolicyMaker(IOService *policyMaker);
+	virtual IOReturn        setPowerState(unsigned long powerStateOrdinal,
+					      IOService *policyMaker);
+	virtual UInt32          outputPacket(mbuf_t m,
+					     void *param);
+	virtual IOReturn        selectMedium(const IONetworkMedium *medium);
+	virtual const OSString *newModelString() const;
+	virtual const OSString *newRevisionString() const;
+	virtual const OSString *newVendorString() const;
+	
 #pragma mark -
 #pragma mark IOEthernetController Methods
-
-  virtual IOReturn getHardwareAddress(IOEthernetAddress *address);
-  virtual IOReturn setHardwareAddress(const IOEthernetAddress *address);
-  virtual IOReturn setWakeOnMagicPacket(bool active);
-  virtual IOReturn setMulticastMode(bool active);
-  virtual IOReturn setMulticastList(IOEthernetAddress *addrs,
-                                    UInt32 count);
-  virtual IOReturn setPromiscuousMode(bool active);
-
+	
+	virtual IOReturn getHardwareAddress(IOEthernetAddress *address);
+	virtual IOReturn setHardwareAddress(const IOEthernetAddress *address);
+	virtual IOReturn setWakeOnMagicPacket(bool active);
+	virtual IOReturn setMulticastMode(bool active);
+	virtual IOReturn setMulticastList(IOEthernetAddress *addrs,
+					  UInt32 count);
+	virtual IOReturn setPromiscuousMode(bool active);
+	
 #pragma mark -
 #pragma mark MAC
 #pragma mark -
-
+	
 #pragma mark -
 #pragma mark Initialization/Reset
-
-  bool     setupDriver(IOService *provider);
-  bool     resetAdapter();
-  void     initializePCIConfig();
-  void     prepareDriver();
-  bool     initializeAdapter();
-  void     stopAdapter();
-  IOReturn lockNVRAM();
-  void     configureMACAddress();
-  void     clearStatistics();
-  void     updateStatistics();
-
-
+	
+	bool     setupDriver(IOService *provider);
+	bool     resetAdapter();
+	void     initializePCIConfig();
+	void     prepareDriver();
+	bool     initializeAdapter();
+	void     stopAdapter();
+	IOReturn lockNVRAM();
+	void     configureMACAddress();
+	void     clearStatistics();
+	void     updateStatistics();
+	
+	
 #pragma mark -
 #pragma mark Memory/Ring
-
-  bool allocateDescriptorMemory(IOBufferMemoryDescriptor **memory,
-                                IOByteCount size);
-  void freeDescriptorMemory(IOBufferMemoryDescriptor **memory);
-  bool allocateDriverMemory();
-  bool configureRxDescriptor(UInt16 index, BOption options = kOptionDefault);
-  bool initTxRing();
-  void freeTxRing();
-  bool initRxRing();
-  void freeRxRing();
-
-
+	
+	bool allocateDescriptorMemory(IOBufferMemoryDescriptor **memory,
+				      IOByteCount size);
+	void freeDescriptorMemory(IOBufferMemoryDescriptor **memory);
+	bool allocateDriverMemory();
+	bool configureRxDescriptor(UInt16 index, BOption options = kOptionDefault);
+	bool initTxRing();
+	void freeTxRing();
+	bool initRxRing();
+	void freeRxRing();
+	
+	
 #pragma mark -
 #pragma mark Interrupt Handling
-
-  void enableInterrupts(bool active);
-  void interruptOccurred(IOInterruptEventSource *source, int count);
-  void timeoutOccurred(IOTimerEventSource *source);
-  void serviceTxInterrupt(UInt16 consumerIdx);
-  void serviceRxInterrupt(UInt16 producerIdx);
-
-
+	
+	void enableInterrupts(bool active);
+	void interruptOccurred(IOInterruptEventSource *source, int count);
+	void timeoutOccurred(IOTimerEventSource *source);
+	void serviceTxInterrupt(UInt16 consumerIdx);
+	void serviceRxInterrupt(UInt16 producerIdx);
+	
+	
 #pragma mark -
 #pragma mark Reader/Writer
-
-  void     writeCSR(UInt32 offset, UInt32 value);
-  UInt32   readCSR(UInt32 offset);
-  void     writeMemoryIndirect(UInt32 offset, UInt32 value);
-  UInt32   readMemoryIndirect(UInt32 offset);
-  void     writeMailbox(UInt32 offset, UInt32 value);
-  UInt32   readMailbox(UInt32 offset);
-  void     clearBit(UInt32 offset, UInt32 bit);
-  void     setBit(UInt32 offset, UInt32 bit);
-
-
+	
+	void     writeCSR(UInt32 offset, UInt32 value);
+	UInt32   readCSR(UInt32 offset);
+	void     writeMemoryIndirect(UInt32 offset, UInt32 value);
+	UInt32   readMemoryIndirect(UInt32 offset);
+	void     writeMailbox(UInt32 offset, UInt32 value);
+	UInt32   readMailbox(UInt32 offset);
+	void     clearBit(UInt32 offset, UInt32 bit);
+	void     setBit(UInt32 offset, UInt32 bit);
+	
+	
 #pragma mark -
 #pragma mark Helper
-
-  UInt32 computeEthernetCRC(const UInt8 *address, int length);
-  void   prepareForWakeOnLanMode();
-
-
+	
+	UInt32 computeEthernetCRC(const UInt8 *address, int length);
+	void   prepareForWakeOnLanMode();
+	
+	
 #pragma mark -
 #pragma mark PHY
 #pragma mark -
-
+	
 #pragma mark -
 #pragma mark Initialization/Reset/Fixes
-
-  bool     probePHY();
-  bool     setupPHY();
-  IOReturn resetPHY();
-  void     acknowledgeInterrupt();
-  void     configureMAC();
-  void     enableLoopback();
-  void     fixJitterBug();
-  void     fixAdjustTrim();
-
-
+	
+	bool     probePHY();
+	bool     setupPHY();
+	IOReturn resetPHY();
+	void     acknowledgeInterrupt();
+	void     configureMAC();
+	void     enableLoopback();
+	void     fixJitterBug();
+	void     fixAdjustTrim();
+	
+	
 #pragma mark -
 #pragma mark Medium
-
-  void     addNetworkMedium(UInt32 type,
-                            UInt32 speed,
-                            UInt32 index);
-  void     probeMediaCapability();
-  IOReturn setMedium(const IONetworkMedium *medium);
-
-
+	
+	void     addNetworkMedium(UInt32 type,
+				  UInt32 speed,
+				  UInt32 index);
+	void     probeMediaCapability();
+	IOReturn setMedium(const IONetworkMedium *medium);
+	
+	
 #pragma mark -
 #pragma mark Link
-
-  UInt16   resolvePauseAdvertisement(FlowControl flowControl);
-  void     setupFlowControl(UInt16 local, UInt16 partner);
-  void     configureLinkAdvertisement(LinkSpeed linkSpeed,
-                                      LinkDuplex linkDuplex);
-  bool     startAutoNegotiation(LinkSpeed changeSpeed,
-                                LinkDuplex changeDuplex);
-  bool     forceLinkSpeedDuplex(LinkSpeed changeSpeed,
-                                LinkDuplex changeDuplex);
-  void     resolveOperatingSpeedAndLinkDuplex(UInt16 status);
-  void     enableAutoMDIX(bool active);
-  void     enableEthernetAtWirespeed();
-  void     reportLinkStatus();
-
-
+	
+	UInt16   resolvePauseAdvertisement(FlowControl flowControl);
+	void     setupFlowControl(UInt16 local, UInt16 partner);
+	void     configureLinkAdvertisement(LinkSpeed linkSpeed,
+					    LinkDuplex linkDuplex);
+	bool     startAutoNegotiation(LinkSpeed changeSpeed,
+				      LinkDuplex changeDuplex);
+	bool     forceLinkSpeedDuplex(LinkSpeed changeSpeed,
+				      LinkDuplex changeDuplex);
+	void     resolveOperatingSpeedAndLinkDuplex(UInt16 status);
+	void     enableAutoMDIX(bool active);
+	void     enableEthernetAtWirespeed();
+	void     reportLinkStatus();
+	
+	
 #pragma mark -
 #pragma mark Interrupt Handling
-
-  void serviceLinkInterrupt();
-
-
+	
+	void serviceLinkInterrupt();
+	
+	
 #pragma mark -
 #pragma mark Reader/Writer
-
-  IOReturn writeMII(UInt8 reg, UInt16 value);
-  IOReturn readMII(UInt8 reg, UInt16 *value);
-
+	
+	IOReturn writeMII(UInt8 reg, UInt16 value);
+	IOReturn readMII(UInt8 reg, UInt16 *value);
+	
 };
 
 #endif

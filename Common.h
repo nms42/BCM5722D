@@ -27,19 +27,19 @@
 #ifdef _DEBUG
 
 #define DebugLog(fmt, args...) \
-    IOLog("BCM5722D (%s:%d): "fmt"\n", __FUNCTION__, __LINE__, ## args)
+IOLog("BCM5722D (%s:%d): "fmt"\n", __FUNCTION__, __LINE__, ## args)
 #define LogReg(reg) \
-    DebugLog(#reg": 0x%08X", readCSR(reg))
+DebugLog(#reg": 0x%08X", readCSR(reg))
 
 #else
 
-  #define DebugLog(fmt, args...)
-  #define LogReg(reg)
+#define DebugLog(fmt, args...)
+#define LogReg(reg)
 
 #endif
 
 #define Log(fmt, args...) \
-    IOLog("%s: "fmt"\n", getName(), ## args)
+IOLog("%s: "fmt"\n", getName(), ## args)
 
 #define GET_ASICREV(x)    ((x) >> 12)
 #define GET_REVID(x)      ((x) & 0xF)

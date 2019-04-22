@@ -25,12 +25,12 @@
 
 struct BTxBufferDescriptor
 {
-  UInt32 addressHigh;
-  UInt32 addressLow;
-  UInt16 flags;
-  UInt16 length;
-  UInt16 vlanTag;
-  UInt16 mss;
+	UInt32 addressHigh;
+	UInt32 addressLow;
+	UInt16 flags;
+	UInt16 length;
+	UInt16 vlanTag;
+	UInt16 mss;
 };
 
 // Transmit BD Flags
@@ -48,18 +48,18 @@ struct BTxBufferDescriptor
 
 struct BRxBufferDescriptor
 {
-  UInt32 addressHigh;
-  UInt32 addressLow;
-  UInt16 length;
-  UInt16 index;
-  UInt16 flags;
-  UInt16 type;
-  UInt16 tcpUDPCksum;
-  UInt16 ipCksum;
-  UInt16 vlanTag;
-  UInt16 errorFlags;
-  UInt32 rssHash;
-  UInt32 opaque;
+	UInt32 addressHigh;
+	UInt32 addressLow;
+	UInt16 length;
+	UInt16 index;
+	UInt16 flags;
+	UInt16 type;
+	UInt16 tcpUDPCksum;
+	UInt16 ipCksum;
+	UInt16 vlanTag;
+	UInt16 errorFlags;
+	UInt32 rssHash;
+	UInt32 opaque;
 };
 
 // Receive BD Flags
@@ -88,14 +88,14 @@ struct BRxBufferDescriptor
 
 struct BStatusBlock
 {
-  UInt32 statusWord;
-  UInt32 statusTag;
-  UInt16 rxReturn2ProducerIdx;
-  UInt16 rxConsumerIdx;
-  UInt16 rxReturn4ProducerIdx;
-  UInt16 rxReturn3ProducerIdx;
-  UInt16 rxReturn1ProducerIdx;
-  UInt16 txConsumerIdx;
+	UInt32 statusWord;
+	UInt32 statusTag;
+	UInt16 rxReturn2ProducerIdx;
+	UInt16 rxConsumerIdx;
+	UInt16 rxReturn4ProducerIdx;
+	UInt16 rxReturn3ProducerIdx;
+	UInt16 rxReturn1ProducerIdx;
+	UInt16 txConsumerIdx;
 };
 
 // Status Block Status

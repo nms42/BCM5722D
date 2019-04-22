@@ -21,9 +21,9 @@
 
 enum
 {
-  kPowerStateOff = 0,
-  kPowerStateOn,
-  kPowerStateCount
+	kPowerStateOff = 0,
+	kPowerStateOn,
+	kPowerStateCount
 };
 
 
@@ -32,93 +32,93 @@ enum
 
 
 IOReturn BCM5722D::getPacketFilters(const OSSymbol *group,
-                                    UInt32 *filters) const
+				    UInt32 *filters) const
 {
-  if ((group == gIOEthernetWakeOnLANFilterGroup) &&
-      magicPacketSupported) {
-
-    *filters = kIOEthernetWakeOnMagicPacket;
-
-    return kIOReturnSuccess;
-
-  }
-
-  return IOEthernetController::getPacketFilters(group, filters);
+	if ((group == gIOEthernetWakeOnLANFilterGroup) &&
+	    magicPacketSupported) {
+		
+		*filters = kIOEthernetWakeOnMagicPacket;
+		
+		return kIOReturnSuccess;
+		
+	}
+	
+	return IOEthernetController::getPacketFilters(group, filters);
 } // getPacketFilters()
 
 
 IOReturn BCM5722D::setWakeOnMagicPacket(bool active)
 {
-  wakeOnLanEnabled = active;
-
-  return kIOReturnSuccess;
+	wakeOnLanEnabled = active;
+	
+	return kIOReturnSuccess;
 } // setWakeOnMagicPacket()
 
 
 IOReturn BCM5722D::registerWithPolicyMaker(IOService *policyMaker)
 {
-  static IOPMPowerState devicePowerState[kPowerStateCount] = {
-
-    { 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 },
-    { 1, kIOPMDeviceUsable, kIOPMPowerOn, kIOPMPowerOn, 0, 0, 0, 0, 0, 0,
-      0, 0 }
-
-  };
-
-  currentPowerState = kPowerStateOn;
-
-  return policyMaker->registerPowerDriver(this,
-                                          devicePowerState,
-                                          kPowerStateCount);
+	static IOPMPowerState devicePowerState[kPowerStateCount] = {
+		
+		{ 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 },
+		{ 1, kIOPMDeviceUsable, kIOPMPowerOn, kIOPMPowerOn, 0, 0, 0, 0, 0, 0,
+			0, 0 }
+		
+	};
+	
+	currentPowerState = kPowerStateOn;
+	
+	return policyMaker->registerPowerDriver(this,
+						devicePowerState,
+						kPowerStateCount);
 } // registerWithPolicyMaker()
 
 
 IOReturn BCM5722D::setPowerState(unsigned long powerStateOrdinal,
-                                 IOService *policyMaker)
+				 IOService *policyMaker)
 {
-  if (powerStateOrdinal == currentPowerState) {
-    return IOPMAckImplied;
-  }
-
-  DebugLog("Changing power state from %lu to %lu", currentPowerState, powerStateOrdinal);
-  
-  switch (powerStateOrdinal) {
-
-    case kPowerStateOn:
-    {
-      pciNub->configWrite16(kPCIPMCS, kPCIPMCSPMEStatus);
-      IOSleep(10);
-
-      break;
-    }
-    case kPowerStateOff:
-    {
-      IOOptionBits state = (wakeOnLanEnabled ?
-                            kPCIPMCPMESupportFromD3Cold :
-                            kPCIPMCD3Support);
-      
-      if (wakeOnLanEnabled) {
-        prepareForWakeOnLanMode();
-      }
-
-      pciNub->hasPCIPowerManagement(state);
-
-      break;
-    }
-    default:
-    {
-      DebugLog("ATTENTION: unknown powerStateOrdinal: %lx", powerStateOrdinal);
-      break;
-    }
- }
-
-  currentPowerState = powerStateOrdinal;
-
-  return IOPMAckImplied;
+	if (powerStateOrdinal == currentPowerState) {
+		return IOPMAckImplied;
+	}
+	
+	DebugLog("Changing power state from %lu to %lu", currentPowerState, powerStateOrdinal);
+	
+	switch (powerStateOrdinal) {
+			
+		case kPowerStateOn:
+		{
+			pciNub->configWrite16(kPCIPMCS, kPCIPMCSPMEStatus);
+			IOSleep(10);
+			
+			break;
+		}
+		case kPowerStateOff:
+		{
+			IOOptionBits state = (wakeOnLanEnabled ?
+					      kPCIPMCPMESupportFromD3Cold :
+					      kPCIPMCD3Support);
+			
+			if (wakeOnLanEnabled) {
+				prepareForWakeOnLanMode();
+			}
+			
+			pciNub->hasPCIPowerManagement(state);
+			
+			break;
+		}
+		default:
+		{
+			DebugLog("ATTENTION: unknown powerStateOrdinal: %lx", powerStateOrdinal);
+			break;
+		}
+	}
+	
+	currentPowerState = powerStateOrdinal;
+	
+	return IOPMAckImplied;
 } // setPowerState()
 
 
 void BCM5722D::prepareForWakeOnLanMode()
 {
-  // not implemented
+	// not implemented
 } // prepareForWakeOnLanMode()

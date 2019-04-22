@@ -30,10 +30,10 @@
  */
 enum FlowControl
 {
-  kFlowControlDisabled = 0,
-  kFlowControlRx,
-  kFlowControlTx,
-  kFlowControlSymmetric,
+	kFlowControlDisabled = 0,
+	kFlowControlRx,
+	kFlowControlTx,
+	kFlowControlSymmetric,
 };
 
 
@@ -41,14 +41,14 @@ enum FlowControl
  */
 enum
 {
-  kMediumTypeIndexAuto = 0,
-  kMediumTypeIndex10HD,
-  kMediumTypeIndex10FD,
-  kMediumTypeIndex100HD,
-  kMediumTypeIndex100FD,
-  kMediumTypeIndex1000HD,
-  kMediumTypeIndex1000FD,
-  kMediumTypeCount,
+	kMediumTypeIndexAuto = 0,
+	kMediumTypeIndex10HD,
+	kMediumTypeIndex10FD,
+	kMediumTypeIndex100HD,
+	kMediumTypeIndex100FD,
+	kMediumTypeIndex1000HD,
+	kMediumTypeIndex1000FD,
+	kMediumTypeCount,
 };
 
 
@@ -56,10 +56,10 @@ enum
  */
 enum LinkDuplex
 {
-  kLinkDuplexFull,
-  kLinkDuplexHalf,
-  kLinkDuplexNegotiate,
-  kLinkDuplexNone
+	kLinkDuplexFull,
+	kLinkDuplexHalf,
+	kLinkDuplexNegotiate,
+	kLinkDuplexNone
 };
 
 
@@ -67,11 +67,11 @@ enum LinkDuplex
  */
 enum LinkSpeed
 {
-  kLinkSpeedNone = 0,
-  kLinkSpeed10 = 10,
-  kLinkSpeed100 = 100,
-  kLinkSpeed1000 = 1000,
-  kLinkSpeedNegotiate
+	kLinkSpeedNone = 0,
+	kLinkSpeed10 = 10,
+	kLinkSpeed100 = 100,
+	kLinkSpeed1000 = 1000,
+	kLinkSpeedNegotiate
 };
 
 
@@ -79,8 +79,8 @@ enum LinkSpeed
  */
 enum LinkState
 {
-  kLinkStateUp,
-  kLinkStateDown
+	kLinkStateUp,
+	kLinkStateDown
 };
 
 
@@ -88,8 +88,8 @@ enum LinkState
  */
 enum
 {
-  kAutoNegotiationDelay = 50,
-  kAutoNegotiationTimeout = 10000
+	kAutoNegotiationDelay = 50,
+	kAutoNegotiationTimeout = 10000
 };
 
 
@@ -97,17 +97,17 @@ enum
  */
 struct MediaStatus
 {
-  LinkDuplex  duplex;
-  LinkSpeed   speed;
-  LinkState   state;
-  FlowControl flowControl;
-
-  void reset()
-  {
-    speed = kLinkSpeedNone;
-    duplex = kLinkDuplexNone;
-    flowControl = kFlowControlSymmetric;
-  }
+	LinkDuplex  duplex;
+	LinkSpeed   speed;
+	LinkState   state;
+	FlowControl flowControl;
+	
+	void reset()
+	{
+		speed = kLinkSpeedNone;
+		duplex = kLinkDuplexNone;
+		flowControl = kFlowControlSymmetric;
+	}
 };
 
 #endif
