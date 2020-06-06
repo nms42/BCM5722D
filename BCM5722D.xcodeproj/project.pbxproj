@@ -3,7 +3,7 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 50;
+	objectVersion = 51;
 	objects = {
 
 /* Begin PBXBuildFile section */
@@ -140,7 +140,7 @@
 				};
 			};
 			buildConfigurationList = 1DEB91DD08733DB10010E9CD /* Build configuration list for PBXProject "BCM5722D" */;
-			compatibilityVersion = "Xcode 9.3";
+			compatibilityVersion = "Xcode 10.0";
 			developmentRegion = English;
 			hasScannedForEncodings = 1;
 			knownRegions = (
@@ -226,7 +226,8 @@
 				PRODUCT_NAME = BCM5722D;
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				SDKROOT = macosx10.13;
-				VALID_ARCHS = "i386 x86_64";
+				VALID_ARCHS = x86_64;
+				"VALID_ARCHS[sdk=*]" = x86_64;
 				WRAPPER_EXTENSION = kext;
 			};
 			name = Debug;
@@ -251,7 +252,7 @@
 				PRODUCT_NAME = BCM5722D;
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				SDKROOT = macosx10.13;
-				VALID_ARCHS = "i386 x86_64";
+				VALID_ARCHS = x86_64;
 				WRAPPER_EXTENSION = kext;
 			};
 			name = Release;
