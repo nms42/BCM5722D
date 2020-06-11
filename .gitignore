@@ -6,6 +6,8 @@ tags
 types_c.vim
 
 build/
+DerivedData/
+Index/
 
 *.pbxuser
 *.mode1v3
