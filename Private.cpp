@@ -223,6 +223,7 @@ bool BCM5722D::initializeAdapter()
 	writeCSR(FTQ_RESET, 0x0);
 	
 	// Step 33
+	IS_4GB_IN(rxAddress, 0x200 << RCB_MAXLEN_SHIFT);
 	writeCSR(RXDBDI_RXPRCB_HOSTADDR_HI, HOSTADDRESS_HI(rxAddress));
 	writeCSR(RXDBDI_RXPRCB_HOSTADDR_LO, HOSTADDRESS_LO(rxAddress));
 	writeCSR(RXDBDI_RXPRCB_MAXLEN, (0x200 << RCB_MAXLEN_SHIFT)); // 512
@@ -261,6 +262,7 @@ bool BCM5722D::initializeAdapter()
 	UInt32 address;
 	
 	address = MEMWIN_START + SRAM_TX_RING_RCB;
+	IS_4GB_IN(txAddress, kTxBDCount << RCB_MAXLEN_SHIFT);
 	writeCSR(address + RCB_HOSTADDR_HI, HOSTADDRESS_HI(txAddress));
 	writeCSR(address + RCB_HOSTADDR_LO, HOSTADDRESS_LO(txAddress));
 	writeCSR(address + RCB_MAXLEN_FLAGS, (kTxBDCount << RCB_MAXLEN_SHIFT));
@@ -282,6 +284,7 @@ bool BCM5722D::initializeAdapter()
 	
 	// Step 38
 	address = MEMWIN_START + SRAM_RXR_RING_RCB;
+	IS_4GB_IN(rxReturnAddress, 0x200 << RCB_MAXLEN_SHIFT);
 	writeCSR(address + RCB_HOSTADDR_HI, HOSTADDRESS_HI(rxReturnAddress));
 	writeCSR(address + RCB_HOSTADDR_LO, HOSTADDRESS_LO(rxReturnAddress));
 	writeCSR(address + RCB_MAXLEN_FLAGS, (0x200 << RCB_MAXLEN_SHIFT));
@@ -848,6 +851,7 @@ bool BCM5722D::configureRxDescriptor(UInt16 index,
 									  kRxMaxSegmentCount);
 			
 			if (count) {
+				IS_4GB_IN(segment.location, segment.length);
 				bd->addressHigh = HOSTADDRESS_HI(segment.location);
 				bd->addressLow = HOSTADDRESS_LO(segment.location);
 				bd->flags = RXBDFLAG_PACKET_END;

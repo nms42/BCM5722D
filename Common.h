@@ -48,3 +48,5 @@ IOLog("%s: "fmt"\n", getName(), ## args)
 #define HOSTADDRESS_LO(x) ((UInt64)(x) & 0xFFFFFFFFULL)
 
 #endif
+
+#define IS_4GB_IN(x, y) if (HOSTADDRESS_HI((x)) != HOSTADDRESS_HI((UInt64)(x) + (UInt64)(y))) DebugLog("%s\n", "Oops! x4GiB mark inside!")

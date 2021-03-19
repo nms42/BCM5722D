@@ -553,6 +553,7 @@ UInt32 BCM5722D::outputPacket(mbuf_t m, void *param)
 		int lastSegment;
 		
 		for (int i = 0; i < segmentCount; i++) {
+			IS_4GB_IN(segments[i].location, segments[i].length);
 			txBD[producer].addressHigh = HOSTADDRESS_HI(segments[i].location);
 			txBD[producer].addressLow = HOSTADDRESS_LO(segments[i].location);
 			txBD[producer].length = segments[i].length;
